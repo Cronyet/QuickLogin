@@ -14,6 +14,7 @@ namespace QuickLogin
         internal const int App_Build_Year = 2022;
 
         internal static string WorkBase = Environment.CurrentDirectory;
+        internal static string FilePath_PWD = $"{WorkBase}\\pwd.dat";
 
         internal struct Pair
         {
