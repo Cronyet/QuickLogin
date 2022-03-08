@@ -2,6 +2,8 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
+#pragma warning disable CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
+
 namespace QuickLogin
 {
     public partial class MainForm : Form
@@ -91,11 +93,16 @@ namespace QuickLogin
         {
             string name = new InputForm("Add new pwd", "Name: ").ShowTopMost(this);
             string pwd = new InputForm("Add new pwd", "Password: ").ShowTopMost(this);
-            Global.pwds.Add(name ?? "", new Global.Pair()
+            string key = new InputForm("Add new pwd", "Key: ",
+                type: InputForm.InputType.Keyboard).ShowTopMost(this);
+            Global.pwds.Add(name ?? "NaN", new Global.Pair()
             {
-                pwd = pwd ?? "",
+                pwd = pwd ?? "NaN",
+                keys = key ?? "Ctrl+Shift+Q"
             });
             DrawPWDTree();
         }
     }
 }
+
+#pragma warning restore CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。

@@ -4,6 +4,11 @@
     {
         private bool IsConfirmed = false;
 
+        public enum InputType
+        {
+            Text = 0, Keyboard = 1
+        }
+
         /// <summary>
         /// 输入框
         /// </summary>
@@ -12,7 +17,8 @@
         /// <param name="cancel_text">取消按钮文字</param>
         /// <param name="confirm_text">确认按钮文字</param>
         public InputForm(string header = "InputForm", string tip = "input",
-            string cancel_text = "Cancel", string confirm_text = "Confirm")
+            string cancel_text = "Cancel", string confirm_text = "Confirm",
+            InputType type = InputType.Text)
         {
             InitializeComponent();
             cancel.Text = cancel_text;
@@ -20,6 +26,21 @@
             label.Text = tip;
             Text = header;
             TopMost = true;
+            switch (type)
+            {
+                case InputType.Keyboard:
+                    input.ReadOnly = true;
+                    KeyDown += (_, e) =>
+                    {
+                        string rst = "";
+                        if (e.Control) rst += "Ctrl+";
+                        if (e.Shift) rst += "Shift+";
+                        if (e.Alt) rst += "Alt+";
+                        rst += e.KeyCode.ToString();
+                        input.Text = rst;
+                    };
+                    break;
+            }
         }
 
         /// <summary>
@@ -27,7 +48,7 @@
         /// </summary>
         /// <param name="owner">所有者</param>
         /// <returns>输入的内容</returns>
-        internal string ShowTopMost(Form? owner)
+        internal string? ShowTopMost(Form? owner)
         {
             CheckForIllegalCrossThreadCalls = false; // 取消跨线程 UI 操作检查
             new Thread(() =>
