@@ -2,8 +2,6 @@ namespace QuickLogin
 {
     internal static class Program
     {
-        internal static Global global = new();
-
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>

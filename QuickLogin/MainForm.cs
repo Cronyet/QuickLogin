@@ -28,7 +28,18 @@ namespace QuickLogin
         /// </summary>
         private void DrawPWDTree()
         {
-
+            TreeView tree = pwdtree;
+            TreeNode root = tree.Nodes[0];
+            root.Nodes.Clear();
+            foreach (string item in Global.pwds.Keys)
+            {
+                Global.Pair pair = Global.pwds[item];
+                root.Nodes.Add(new TreeNode()
+                {
+                    Text = item,
+                });
+            }
+            root.ExpandAll();
         }
 
         /// <summary>

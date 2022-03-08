@@ -30,7 +30,7 @@
         {
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("密码树");
             this.groupbox_pwds = new System.Windows.Forms.GroupBox();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.pwdtree = new System.Windows.Forms.TreeView();
             this.btn_add = new System.Windows.Forms.Button();
             this.btn_exit = new System.Windows.Forms.Button();
             this.label_quake = new System.Windows.Forms.Label();
@@ -41,7 +41,7 @@
             // 
             // groupbox_pwds
             // 
-            this.groupbox_pwds.Controls.Add(this.treeView1);
+            this.groupbox_pwds.Controls.Add(this.pwdtree);
             this.groupbox_pwds.Location = new System.Drawing.Point(12, 12);
             this.groupbox_pwds.Name = "groupbox_pwds";
             this.groupbox_pwds.Size = new System.Drawing.Size(328, 410);
@@ -49,16 +49,16 @@
             this.groupbox_pwds.TabStop = false;
             this.groupbox_pwds.Text = "Saved pwd";
             // 
-            // treeView1
+            // pwdtree
             // 
-            this.treeView1.Location = new System.Drawing.Point(6, 26);
-            this.treeView1.Name = "treeView1";
+            this.pwdtree.Location = new System.Drawing.Point(6, 26);
+            this.pwdtree.Name = "pwdtree";
             treeNode2.Name = "node_root";
             treeNode2.Text = "密码树";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            this.pwdtree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode2});
-            this.treeView1.Size = new System.Drawing.Size(316, 378);
-            this.treeView1.TabIndex = 0;
+            this.pwdtree.Size = new System.Drawing.Size(316, 378);
+            this.pwdtree.TabIndex = 0;
             // 
             // btn_add
             // 
@@ -140,7 +140,7 @@
         private Button btn_exit;
         private Label label_quake;
         private TextBox textbox_show_hotkey;
-        private TreeView treeView1;
+        private TreeView pwdtree;
         private Button btn_refresh;
     }
 }
