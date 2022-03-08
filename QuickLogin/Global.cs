@@ -13,7 +13,7 @@ namespace QuickLogin
         internal const string App_Copyright = "Copyright © 2021-2099 Catrol";
         internal const int App_Build_Year = 2022;
 
-        internal string WorkBase = Environment.CurrentDirectory;
+        internal static string WorkBase = Environment.CurrentDirectory;
 
         internal struct Pair
         {
