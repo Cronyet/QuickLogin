@@ -34,10 +34,12 @@ namespace QuickLogin
             foreach (string item in Global.pwds.Keys)
             {
                 Global.Pair pair = Global.pwds[item];
-                root.Nodes.Add(new TreeNode()
+                TreeNode node = new()
                 {
                     Text = item,
-                });
+                    ToolTipText = pair.keys
+                };
+                root.Nodes.Add(node);
             }
             root.ExpandAll();
         }
@@ -76,5 +78,15 @@ namespace QuickLogin
         /// <param name="sender">退出按钮</param>
         /// <param name="e">事件参数</param>
         private void Btn_exit_Click(object sender, EventArgs e) => Close();
+
+        /// <summary>
+        /// 添加新密码按钮事件
+        /// </summary>
+        /// <param name="sender">添加新密码按钮</param>
+        /// <param name="e">按钮事件</param>
+        private void btn_add_Click(object sender, EventArgs e)
+        {
+            new InputForm("Add new pwd", "Name: ").ShowTopMost(this);
+        }
     }
 }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("密码树");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("密码树");
             this.groupbox_pwds = new System.Windows.Forms.GroupBox();
             this.pwdtree = new System.Windows.Forms.TreeView();
             this.btn_add = new System.Windows.Forms.Button();
@@ -53,10 +53,10 @@
             // 
             this.pwdtree.Location = new System.Drawing.Point(6, 26);
             this.pwdtree.Name = "pwdtree";
-            treeNode2.Name = "node_root";
-            treeNode2.Text = "密码树";
+            treeNode1.Name = "node_root";
+            treeNode1.Text = "密码树";
             this.pwdtree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode1});
             this.pwdtree.Size = new System.Drawing.Size(316, 378);
             this.pwdtree.TabIndex = 0;
             // 
@@ -68,6 +68,7 @@
             this.btn_add.TabIndex = 2;
             this.btn_add.Text = "Add New pwd";
             this.btn_add.UseVisualStyleBackColor = true;
+            this.btn_add.Click += new System.EventHandler(this.btn_add_Click);
             // 
             // btn_exit
             // 
