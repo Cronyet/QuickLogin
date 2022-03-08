@@ -21,6 +21,9 @@ namespace QuickLogin
             {
                 DrawPWDTree();
             };
+
+            // ∆Ù∂Ø ±ªÊ÷∆
+            DrawPWDTree();
         }
 
         /// <summary>
