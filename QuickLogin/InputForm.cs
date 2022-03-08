@@ -2,6 +2,8 @@
 {
     public partial class InputForm : Form
     {
+        private bool IsConfirmed = false;
+
         /// <summary>
         /// 输入框
         /// </summary>
@@ -27,23 +29,31 @@
         /// <returns>输入的内容</returns>
         internal string ShowTopMost(Form? owner)
         {
-            if (owner != null)
-            {
-                SetDesktopLocation(owner.DesktopLocation.X + (owner.PreferredSize.Width
-                    - PreferredSize.Width) / 2, owner.DesktopLocation.Y +
-                    (owner.PreferredSize.Height - PreferredSize.Height) / 2);\
-            }
-            CheckForIllegalCrossThreadCalls = false;
+            CheckForIllegalCrossThreadCalls = false; // 取消跨线程 UI 操作检查
             new Thread(() =>
             {
                 Thread.Sleep(10);
-                SetDesktopLocation(owner.DesktopLocation.X + (owner.PreferredSize.Width
-                    - PreferredSize.Width) / 2, owner.DesktopLocation.Y +
-                    (owner.PreferredSize.Height - PreferredSize.Height) / 2);
+                if (owner != null)
+                {
+                    SetDesktopLocation(owner.DesktopLocation.X + (owner.PreferredSize.Width
+                        - PreferredSize.Width) / 2, owner.DesktopLocation.Y +
+                        (owner.PreferredSize.Height - PreferredSize.Height) / 2);
+                }
             }).Start();
             ShowDialog();
-            CheckForIllegalCrossThreadCalls = true;
-            return input.Text;
+            CheckForIllegalCrossThreadCalls = true; // 启用跨线程 UI 操作检查
+            return IsConfirmed ? input.Text : null;
+        }
+
+        /// <summary>
+        /// 确认按钮点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Confirm_Click(object sender, EventArgs e)
+        {
+            IsConfirmed = true;
+            Close();
         }
     }
 }

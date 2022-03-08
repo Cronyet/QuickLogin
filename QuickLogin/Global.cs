@@ -16,10 +16,17 @@ namespace QuickLogin
         internal static string WorkBase = Environment.CurrentDirectory;
         internal static string FilePath_PWD = $"{WorkBase}\\pwd.dat";
 
+        [Serializable()]
         internal struct Pair
         {
-            internal string keys;
-            internal string pwd;
+            internal string keys = "";
+            internal string pwd = "";
+
+            public Pair(string keys, string pwd)
+            {
+                this.keys = keys ?? throw new ArgumentNullException(nameof(keys));
+                this.pwd = pwd ?? throw new ArgumentNullException(nameof(pwd));
+            }
         }
 
         internal static Dictionary<string, Pair> pwds = new();

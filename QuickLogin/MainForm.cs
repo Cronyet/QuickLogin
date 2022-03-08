@@ -56,12 +56,6 @@ namespace QuickLogin
         }
 
         /// <summary>
-        /// 关闭时保存密码对
-        /// </summary>
-        /// <param name="e">关闭事件</param>
-        protected override void OnClosing(CancelEventArgs e) => SavePWD();
-
-        /// <summary>
         /// 保存密码对
         /// </summary>
         private static void SavePWD()
@@ -71,6 +65,12 @@ namespace QuickLogin
             formatter.Serialize(stream, Global.pwds);
             stream.Close();
         }
+
+        /// <summary>
+        /// 关闭时保存密码对
+        /// </summary>
+        /// <param name="e">关闭事件</param>
+        protected override void OnClosing(CancelEventArgs e) => SavePWD();
 
         /// <summary>
         /// 退出按钮事件
@@ -84,9 +84,15 @@ namespace QuickLogin
         /// </summary>
         /// <param name="sender">添加新密码按钮</param>
         /// <param name="e">按钮事件</param>
-        private void btn_add_Click(object sender, EventArgs e)
+        private void Btn_add_Click(object sender, EventArgs e)
         {
-            new InputForm("Add new pwd", "Name: ").ShowTopMost(this);
+            string name = new InputForm("Add new pwd", "Name: ").ShowTopMost(this);
+            string pwd = new InputForm("Add new pwd", "Password: ").ShowTopMost(this);
+            Global.pwds.Add(name ?? "", new Global.Pair()
+            {
+                pwd = pwd ?? "",
+            });
+            DrawPWDTree();
         }
     }
 }

@@ -58,6 +58,7 @@
             this.confirm.TabIndex = 2;
             this.confirm.Text = "Confirm";
             this.confirm.UseVisualStyleBackColor = true;
+            this.confirm.Click += new System.EventHandler(this.Confirm_Click);
             // 
             // label
             // 
