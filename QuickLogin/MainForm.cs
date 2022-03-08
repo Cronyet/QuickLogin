@@ -6,22 +6,40 @@ namespace QuickLogin
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// 构造函数 并 初始化
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
 
-            if (File.Exists(Global.FilePath_PWD))
-            {
-                IFormatter formatter = new BinaryFormatter();
-                Stream stream = new FileStream(Global.FilePath_PWD, FileMode.Open, FileAccess.Read, FileShare.None);
-                Global.pwds = (Dictionary<string, Global.Pair>)formatter.Deserialize(stream);
-                stream.Close();
-            }
+            // 如果存在已保存的密码数据则读取他
+            if (File.Exists(Global.FilePath_PWD)) LoadPWD();
 
+            // 设置刷新按钮事件
             btn_refresh.Click += (_, _) =>
             {
-
+                DrawPWDTree();
             };
+        }
+
+        /// <summary>
+        /// 绘制密码树
+        /// </summary>
+        private void DrawPWDTree()
+        {
+
+        }
+
+        /// <summary>
+        /// 加载已保存的密码
+        /// </summary>
+        private static void LoadPWD()
+        {
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(Global.FilePath_PWD, FileMode.Open, FileAccess.Read, FileShare.None);
+            Global.pwds = (Dictionary<string, Global.Pair>)formatter.Deserialize(stream);
+            stream.Close();
         }
 
         /// <summary>
@@ -33,7 +51,7 @@ namespace QuickLogin
         /// <summary>
         /// 保存密码对
         /// </summary>
-        private void SavePWD()
+        private static void SavePWD()
         {
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(Global.FilePath_PWD, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
@@ -41,10 +59,11 @@ namespace QuickLogin
             stream.Close();
         }
 
-        private void btn_exit_Click(object sender, EventArgs e)
-        {
-
-            Close();
-        }
+        /// <summary>
+        /// 退出按钮事件
+        /// </summary>
+        /// <param name="sender">退出按钮</param>
+        /// <param name="e">事件参数</param>
+        private void Btn_exit_Click(object sender, EventArgs e) => Close();
     }
 }

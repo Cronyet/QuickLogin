@@ -18,8 +18,8 @@ namespace QuickLogin
 
         internal struct Pair
         {
-            string keys;
-            string pwd;
+            internal string keys;
+            internal string pwd;
         }
 
         internal static Dictionary<string, Pair> pwds = new();
