@@ -18,37 +18,41 @@ namespace QuickLogin
         /// <param name="pwd">密码</param>
         internal static void SendPwd(string pwd)
         {
-            string[] keys = pwd.Split('+');
-            bool[] ControlKeyStatus = new bool[3] { false, false, false };
-            foreach (string item in keys)
-            {
-                if(item != null && item != "")
-                {
-                    switch (item)
-                    {
-                        case "Ctrl":
-                            SetKeyDown(Keys.LControlKey);
-                            ControlKeyStatus[0] = true;
-                            break;
-                        case "Shift":
-                            SetKeyDown(Keys.LShiftKey);
-                            ControlKeyStatus[1] = true;
-                            break;
-                        case "Alt":
-                            SetKeyDown(Keys.Alt);
-                            ControlKeyStatus[2] = true;
-                            break;
-                        default:
-                            Keys key = (Keys)new KeysConverter().ConvertFromString(item);
-                            SetKeyDown(key);
-                            SetKeyUp(key);
-                            break;
-                    }
-                }
-            }
-            if(ControlKeyStatus[0]) SetKeyUp(Keys.LControlKey);
-            if(ControlKeyStatus[1]) SetKeyDown(Keys.LShiftKey);
-            if(ControlKeyStatus[2]) SetKeyDown(Keys.Alt);
+            System.Windows.Forms.SendKeys.Send(pwd);
+
+            #region 我是傻逼
+            //string[] keys = pwd.Split('+');
+            //bool[] ControlKeyStatus = new bool[3] { false, false, false };
+            //foreach (string item in keys)
+            //{
+            //    if(item != null && item != "")
+            //    {
+            //        switch (item)
+            //        {
+            //            case "Ctrl":
+            //                SetKeyDown(Keys.LControlKey);
+            //                ControlKeyStatus[0] = true;
+            //                break;
+            //            case "Shift":
+            //                SetKeyDown(Keys.LShiftKey);
+            //                ControlKeyStatus[1] = true;
+            //                break;
+            //            case "Alt":
+            //                SetKeyDown(Keys.Alt);
+            //                ControlKeyStatus[2] = true;
+            //                break;
+            //            default:
+            //                Keys key = (Keys)new KeysConverter().ConvertFromString(item);
+            //                SetKeyDown(key);
+            //                SetKeyUp(key);
+            //                break;
+            //        }
+            //    }
+            //}
+            //if(ControlKeyStatus[0]) SetKeyUp(Keys.LControlKey);
+            //if(ControlKeyStatus[1]) SetKeyDown(Keys.LShiftKey);
+            //if(ControlKeyStatus[2]) SetKeyDown(Keys.Alt); 
+            #endregion
         }
 
         /// <summary>

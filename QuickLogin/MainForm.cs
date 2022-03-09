@@ -5,11 +5,23 @@ using System.Runtime.Serialization.Formatters.Binary;
 #pragma warning disable IDE0079 // 请删除不必要的忽略
 #pragma warning disable CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
 #pragma warning disable CS8602 // 解引用可能出现空引用。
+#pragma warning disable CS8625 // 无法将 null 字面量转换为非 null 的引用类型。
+#pragma warning disable CS8605 // 取消装箱可能为 null 的值。
 
 namespace QuickLogin
 {
     public partial class MainForm : Form
     {
+        /// <summary>
+        /// 热键id记录
+        /// </summary>
+        private readonly Dictionary<int, string> hotKey_id = new();
+
+        /// <summary>
+        /// 热键消息定量
+        /// </summary>
+        private const int WM_HOTKEY = 0x0312;
+
         /// <summary>
         /// 构造函数 并 初始化
         /// </summary>
@@ -63,6 +75,11 @@ namespace QuickLogin
             TreeView tree = pwdtree;
             TreeNode root = tree.Nodes[0];
             root.Nodes.Clear();
+            // 取消注册全部热键
+            foreach (int id in hotKey_id.Keys)
+                HotKey.UnregisterHotKey(Handle, id);
+            hotKey_id.Clear();
+            int index = 1;
             foreach (string item in Global.pwds.Keys)
             {
                 Global.Pair pair = Global.pwds[item];
@@ -72,8 +89,53 @@ namespace QuickLogin
                     ToolTipText = pair.keys
                 };
                 root.Nodes.Add(node);
+                // 注册相关热键
+                RegisterHotKey(item, index);
+                ++index;
             }
             root.ExpandAll();
+        }
+
+        /// <summary>
+        /// 注册热键
+        /// </summary>
+        /// <param name="name">热键名称</param>
+        private void RegisterHotKey(string name, int id)
+        {
+            string[] keys = Global.pwds[name].keys.Split('+');
+            bool[] Modifiers = new bool[3] { false, false, false };
+            Keys key = Keys.None;
+            foreach (string item in keys)
+            {
+                switch (item)
+                {
+                    case "Ctrl": Modifiers[0] = true; break;
+                    case "Shift": Modifiers[1] = true; break;
+                    case "Alt": Modifiers[2] = true; break;
+                    default: key = (Keys)new KeysConverter().ConvertFromString(item); break;
+                }
+            }
+            hotKey_id.Add(id, name);
+            HotKey.RegisterHotKey(Handle, id,
+                (Modifiers[0] ? HotKey.KeyModifiers.Ctrl : HotKey.KeyModifiers.None) |
+                (Modifiers[1] ? HotKey.KeyModifiers.Shift : HotKey.KeyModifiers.None) |
+                (Modifiers[2] ? HotKey.KeyModifiers.Alt : HotKey.KeyModifiers.None)
+                , key);
+        }
+
+        /// <summary>
+        /// 重载消息处理函数
+        /// </summary>
+        /// <param name="m">消息</param>
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case WM_HOTKEY:
+                    SendKeys.SendPwd(Global.pwds[hotKey_id[m.WParam.ToInt32()]].pwd);
+                    break;
+            }
+            base.WndProc(ref m);
         }
 
         /// <summary>
@@ -143,11 +205,13 @@ namespace QuickLogin
                 pwd = pwd,
                 keys = key
             });
-            draw:  DrawPWDTree();
+        draw: DrawPWDTree();
         }
     }
 }
 
+#pragma warning restore CS8605 // 取消装箱可能为 null 的值。
+#pragma warning restore CS8625 // 无法将 null 字面量转换为非 null 的引用类型。
 #pragma warning restore CS8602 // 解引用可能出现空引用。
 #pragma warning restore CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
 #pragma warning restore IDE0079 // 请删除不必要的忽略
