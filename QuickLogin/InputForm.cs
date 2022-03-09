@@ -4,7 +4,6 @@ namespace QuickLogin
 {
     public partial class InputForm : Form
     {
-        private bool IsConfirmed = false;
         private bool IsCancled = false;
 
         public enum InputType
@@ -118,11 +117,7 @@ namespace QuickLogin
             {
                 MessageBox.Show("Hotkey is invalid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else
-            {
-                IsConfirmed = true;
-                Close();
-            }
+            else Close();
         }
 
         /// <summary>

@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
+#pragma warning disable IDE0079 // 请删除不必要的忽略
 #pragma warning disable CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
 #pragma warning disable CS8602 // 解引用可能出现空引用。
 
@@ -149,3 +150,4 @@ namespace QuickLogin
 
 #pragma warning restore CS8602 // 解引用可能出现空引用。
 #pragma warning restore CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
+#pragma warning restore IDE0079 // 请删除不必要的忽略
