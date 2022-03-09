@@ -1,5 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 
+#pragma warning disable CA1401 // P/Invokes 应该是不可见的
+
 namespace QuickLogin
 {
     public class Clipboard
@@ -224,3 +226,5 @@ namespace QuickLogin
         public const int CF_PRIVATELAST = 0x02FF;
     }
 }
+
+#pragma warning restore CA1401 // P/Invokes 应该是不可见的

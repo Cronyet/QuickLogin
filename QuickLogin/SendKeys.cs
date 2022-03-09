@@ -1,7 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 
-#pragma warning disable CS8605 // 取消装箱可能为 null 的值。
-
 namespace QuickLogin
 {
     internal static class SendKeys
@@ -73,5 +71,3 @@ namespace QuickLogin
         internal static void SetKeyUp(Keys key) => keybd_event(key, 0, KEYEVENTF_KEYUP, 0);
     }
 }
-
-#pragma warning restore CS8605 // 取消装箱可能为 null 的值。
