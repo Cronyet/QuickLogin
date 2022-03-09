@@ -1,4 +1,6 @@
-﻿namespace QuickLogin
+﻿using System.ComponentModel;
+
+namespace QuickLogin
 {
     public partial class InputForm : Form
     {
@@ -43,6 +45,19 @@
                         input.Text = rst;
                     };
                     break;
+            }
+        }
+
+        /// <summary>
+        /// 重载关闭函数
+        /// </summary>
+        /// <param name="e">关闭事件</param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (inputType == InputType.Keyboard && (!CheckKey()))
+            {
+                MessageBox.Show("Hotkey is invalid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Cancel = true;
             }
         }
 
