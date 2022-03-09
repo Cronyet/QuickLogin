@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 #pragma warning disable CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。
+#pragma warning disable CS8602 // 解引用可能出现空引用。
 
 namespace QuickLogin
 {
@@ -45,6 +46,9 @@ namespace QuickLogin
                             Global.pwds.Remove(pwdtree.SelectedNode.Text);
                             DrawPWDTree();
                         }
+                        break;
+                    case Keys.Space:
+                        Clipboard.SetText(Global.pwds[pwdtree.SelectedNode.Text].pwd);
                         break;
                 }
             };
@@ -113,18 +117,35 @@ namespace QuickLogin
         /// <param name="e">按钮事件</param>
         private void Btn_add_Click(object sender, EventArgs e)
         {
-            string name = new InputForm("Add new pwd", "Name: ").ShowTopMost(this);
-            string pwd = new InputForm("Add new pwd", "Password: ").ShowTopMost(this);
-            string key = new InputForm("Add new pwd", "Key: ",
-                type: InputForm.InputType.Keyboard).ShowTopMost(this);
-            Global.pwds.Add(name ?? "NaN", new Global.Pair()
+            string name = "", pwd = "", key = "";
+            while (name.Equals(""))
             {
-                pwd = pwd ?? "NaN",
-                keys = key ?? "Ctrl+Shift+Q"
+                string? name_tmp = new InputForm("Add new pwd", "Name: ").ShowTopMost(this);
+                if (name_tmp == null) goto draw;
+                else name = name_tmp;
+            }
+            while (pwd.Equals(""))
+            {
+                string? pwd_tmp = new InputForm("Add new pwd", "Password: ").ShowTopMost(this);
+                if (pwd_tmp == null) goto draw;
+                else pwd = pwd_tmp;
+            }
+            while (key.Equals(""))
+            {
+                string? key_tmp = new InputForm("Add new pwd", "Key: ",
+                    type: InputForm.InputType.Keyboard).ShowTopMost(this);
+                if (key_tmp == null) goto draw;
+                else key = key_tmp;
+            }
+            Global.pwds.Add(name, new Global.Pair()
+            {
+                pwd = pwd,
+                keys = key
             });
-            DrawPWDTree();
+            draw:  DrawPWDTree();
         }
     }
 }
 
+#pragma warning restore CS8602 // 解引用可能出现空引用。
 #pragma warning restore CS8600 // 将 null 字面量或可能为 null 的值转换为非 null 类型。

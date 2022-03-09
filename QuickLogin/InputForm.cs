@@ -5,6 +5,7 @@ namespace QuickLogin
     public partial class InputForm : Form
     {
         private bool IsConfirmed = false;
+        private bool IsCancled = false;
 
         public enum InputType
         {
@@ -31,6 +32,7 @@ namespace QuickLogin
             Text = header;
             TopMost = true;
             inputType = type;
+            input.Text = "";
             switch (type)
             {
                 case InputType.Keyboard:
@@ -54,11 +56,12 @@ namespace QuickLogin
         /// <param name="e">关闭事件</param>
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (inputType == InputType.Keyboard && (!CheckKey()))
-            {
-                MessageBox.Show("Hotkey is invalid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                e.Cancel = true;
-            }
+            if (!IsCancled)
+                if (inputType == InputType.Keyboard && (!CheckKey()))
+                {
+                    MessageBox.Show("Hotkey is invalid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    e.Cancel = true;
+                }
         }
 
         /// <summary>
@@ -81,7 +84,7 @@ namespace QuickLogin
                 CheckForIllegalCrossThreadCalls = true; // 启用跨线程 UI 操作检查
             }).Start();
             ShowDialog();
-            return IsConfirmed ? input.Text : null;
+            return IsCancled ? null : input.Text;
         }
 
         private static readonly string[] InvalidKey = new string[3]
@@ -120,6 +123,17 @@ namespace QuickLogin
                 IsConfirmed = true;
                 Close();
             }
+        }
+
+        /// <summary>
+        /// 取消按钮点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            IsCancled = true;
+            Close();
         }
     }
 }
