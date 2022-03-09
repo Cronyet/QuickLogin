@@ -164,7 +164,14 @@ namespace QuickLogin
         /// 关闭时保存密码对
         /// </summary>
         /// <param name="e">关闭事件</param>
-        protected override void OnClosing(CancelEventArgs e) => SavePWD();
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            foreach (int id in hotKey_id.Keys)
+            {
+                HotKey.UnregisterHotKey(Handle, id);
+            }
+            SavePWD();
+        }
 
         /// <summary>
         /// 退出按钮事件

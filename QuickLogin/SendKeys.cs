@@ -18,7 +18,12 @@ namespace QuickLogin
         /// <param name="pwd">密码</param>
         internal static void SendPwd(string pwd)
         {
-            System.Windows.Forms.SendKeys.Send(pwd);
+            new Thread(() =>
+            {
+                Thread.Sleep(100);
+                Clipboard.SetText(pwd);
+                System.Windows.Forms.SendKeys.SendWait("^v");
+            }).Start();
 
             #region 我是傻逼
             //string[] keys = pwd.Split('+');
