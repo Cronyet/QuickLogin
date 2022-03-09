@@ -15,6 +15,8 @@ namespace QuickLogin
         {
             InitializeComponent();
 
+            InitKeyEvent();
+
             // 如果存在已保存的密码数据则读取他
             if (File.Exists(Global.FilePath_PWD)) LoadPWD();
 
@@ -26,6 +28,26 @@ namespace QuickLogin
 
             // 启动时绘制
             DrawPWDTree();
+        }
+
+        /// <summary>
+        /// 初始化键盘事件
+        /// </summary>
+        private void InitKeyEvent()
+        {
+            KeyDown += (_, e) =>
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Delete:
+                        if (pwdtree.SelectedNode.Tag?.ToString() != "root_node")
+                        {
+                            Global.pwds.Remove(pwdtree.SelectedNode.Text);
+                            DrawPWDTree();
+                        }
+                        break;
+                }
+            };
         }
 
         /// <summary>

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("密码树");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("pwd tree");
             this.groupbox_pwds = new System.Windows.Forms.GroupBox();
             this.pwdtree = new System.Windows.Forms.TreeView();
             this.btn_add = new System.Windows.Forms.Button();
@@ -54,7 +54,8 @@
             this.pwdtree.Location = new System.Drawing.Point(6, 26);
             this.pwdtree.Name = "pwdtree";
             treeNode1.Name = "node_root";
-            treeNode1.Text = "密码树";
+            treeNode1.Tag = "root_node";
+            treeNode1.Text = "pwd tree";
             this.pwdtree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1});
             this.pwdtree.Size = new System.Drawing.Size(316, 378);
