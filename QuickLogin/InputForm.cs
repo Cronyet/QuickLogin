@@ -9,6 +9,8 @@
             Text = 0, Keyboard = 1
         }
 
+        private readonly InputType inputType;
+
         /// <summary>
         /// 输入框
         /// </summary>
@@ -26,6 +28,7 @@
             label.Text = tip;
             Text = header;
             TopMost = true;
+            inputType = type;
             switch (type)
             {
                 case InputType.Keyboard:
@@ -60,10 +63,29 @@
                         - PreferredSize.Width) / 2, owner.DesktopLocation.Y +
                         (owner.PreferredSize.Height - PreferredSize.Height) / 2);
                 }
+                CheckForIllegalCrossThreadCalls = true; // 启用跨线程 UI 操作检查
             }).Start();
             ShowDialog();
-            CheckForIllegalCrossThreadCalls = true; // 启用跨线程 UI 操作检查
             return IsConfirmed ? input.Text : null;
+        }
+
+        private static readonly string[] InvalidKey = new string[3]
+        { "ControlKey", "ShiftKey", "Menu" };
+
+        /// <summary>
+        /// 检查按键是否合法
+        /// </summary>
+        /// <returns>是否合法</returns>
+        private bool CheckKey()
+        {
+            bool pass = true;
+            foreach (string item in InvalidKey)
+                if (input.Text.IndexOf(item) != -1)
+                {
+                    pass = false;
+                    break;
+                }
+            return pass;
         }
 
         /// <summary>
@@ -73,8 +95,15 @@
         /// <param name="e"></param>
         private void Confirm_Click(object sender, EventArgs e)
         {
-            IsConfirmed = true;
-            Close();
+            if (inputType == InputType.Keyboard && (!CheckKey()))
+            {
+                MessageBox.Show("Hotkey is invalid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                IsConfirmed = true;
+                Close();
+            }
         }
     }
 }
