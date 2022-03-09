@@ -100,6 +100,7 @@ namespace QuickLogin
                     pass = false;
                     break;
                 }
+            if (input.Text.Equals("") || input.Text.Equals(null)) pass = false;
             return pass;
         }
 
